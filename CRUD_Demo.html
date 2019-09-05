@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script>
+    function read_value() {
+
+      var url = "#App Scripts URL";
+      $.getJSON(url, function (json) {
+        var table = document.createElement("table");
+
+        var header = table.createTHead();
+        var row = header.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = "<b>ID</b>";
+        cell2.innerHTML = "<b>Location</b>";
+        cell3.innerHTML = "<b>Title</b>";
+
+        for (var i = 0; i < json.length; i++) {
+
+          tr = table.insertRow(-1);
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = json[i].id;
+          tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = json[i].location;
+          tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = json[i].title;
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+      });
+    }
+
+    function insert_value() {
+      $.post(url, {
+        id: 123,
+        location: 'taichung',
+        title: 'hero'
+      }, function (e) {
+        console.log(e);
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <input type="button" onclick="read_value()" value="Read" />
+  <input type="button" onclick="insert_value()" value="Insert" />
+  <div id="showData"></div>
+</body>
+
+</html>
